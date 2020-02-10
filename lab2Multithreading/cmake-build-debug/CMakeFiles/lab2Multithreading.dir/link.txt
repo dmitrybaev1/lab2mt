@@ -1,3 +1,0 @@
-"D:\Program Files\JetBrains\CLion 2019.2.4\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\lab2Multithreading.dir/objects.a
-"D:\Program Files (x86)\MINGW-~1\I686-8~1.0-P\mingw32\bin\ar.exe" cr CMakeFiles\lab2Multithreading.dir/objects.a @CMakeFiles\lab2Multithreading.dir\objects1.rsp
-"D:\Program Files (x86)\MINGW-~1\I686-8~1.0-P\mingw32\bin\gcc.exe" -g   -Wl,--whole-archive CMakeFiles\lab2Multithreading.dir/objects.a -Wl,--no-whole-archive  -o lab2Multithreading.exe -Wl,--out-implib,liblab2Multithreading.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\lab2Multithreading.dir\linklibs.rsp

@@ -43,10 +43,10 @@ RM = "D:\Program Files\JetBrains\CLion 2019.2.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\projects\lab2Multithreading
+CMAKE_SOURCE_DIR = D:\projects\lab2mt\lab2Multithreading
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\projects\lab2Multithreading\cmake-build-debug
+CMAKE_BINARY_DIR = D:\projects\lab2mt\lab2Multithreading\cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -73,14 +73,14 @@ preinstall:
 CMakeFiles/mycat.dir/all:
 	$(MAKE) -f CMakeFiles\mycat.dir\build.make CMakeFiles/mycat.dir/depend
 	$(MAKE) -f CMakeFiles\mycat.dir\build.make CMakeFiles/mycat.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\projects\lab2Multithreading\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target mycat"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\projects\lab2mt\lab2Multithreading\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target mycat"
 .PHONY : CMakeFiles/mycat.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/mycat.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\projects\lab2Multithreading\cmake-build-debug\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\projects\lab2mt\lab2Multithreading\cmake-build-debug\CMakeFiles 2
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/mycat.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\projects\lab2Multithreading\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\projects\lab2mt\lab2Multithreading\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/mycat.dir/rule
 
 # Convenience name for target.

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-D:/projects/lab2Multithreading/main.c
+D:/projects/lab2mt/lab2Multithreading/main.c
 stdio.h
 -
 io.h
