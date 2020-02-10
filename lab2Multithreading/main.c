@@ -89,46 +89,47 @@ int main(int argc, char *argv[]) {
 void printnonprinting(unsigned char c){
     if(c>=0&&c<=37&&c!=9&&c!=10&&c!=12) {
         c = c+64;
-        printf("%c", '^');
-        printf("%c",c);
+        write(STDOUT_FILENO,"^",1);
+        write(STDOUT_FILENO,&c,1);
     }
     else if(c==177)
-        printf("%s","^?");
+        write(STDOUT_FILENO,"^?",2);
     else
-        printf("%c",c);
+        write(STDOUT_FILENO,&c,1);
 }
 void printwithtabs(unsigned char c){
     if(c==9)
-        printf("%s","^I");
+        write(STDOUT_FILENO,"^I",2);
     else
-        printf("%c",c);
+        write(STDOUT_FILENO,&c,1);
 }
 void printwithends(unsigned char c){
     if(c==10)
-        printf("%s\n","$");
+        write(STDOUT_FILENO,"$\n",2);
     else
-        printf("%c",c);
+        write(STDOUT_FILENO,&c,1);
 }
 void printwithnumberfile(unsigned char c, int *i){
     if (c == 10) {
         printf("\n%6d  ", *i);
         (*i)++;
     } else
-        printf("%c", c);
+        write(STDOUT_FILENO,&c,1);
 }
 void printwithnumberstdin(unsigned char c,int *i){
     if(numberflag){
         numberflag=0;
+        char buf[10];
         printf("%6d  ", *i);
-        printf("%c", c);
+        write(STDOUT_FILENO,&c,1);
         (*i)++;
     } else
-        printf("%c", c);
+        write(STDOUT_FILENO,&c,1);
 }
 void printsqueezeblank(unsigned char c){
     if(squeezeflag > 1) {
         if (c != 10){
-            printf("%c",c);
+            write(STDOUT_FILENO,&c,1);
             squeezeflag=0;
         }
     }
@@ -137,7 +138,7 @@ void printsqueezeblank(unsigned char c){
             squeezeflag++;
         else
             squeezeflag=0;
-        printf("%c",c);
+        write(STDOUT_FILENO,&c,1);
     }
 }
 void print(unsigned char c, int *i){
@@ -152,7 +153,7 @@ void print(unsigned char c, int *i){
     else if(args.squeezeblank)
         printsqueezeblank(c);
     else
-        printf("%c",c);
+        write(STDOUT_FILENO,&c,1);
 }
 
 void readfile(char* filename){
@@ -184,7 +185,7 @@ void readfile(char* filename){
                 else if (args.squeezeblank)
                     printsqueezeblank(c);
                 else
-                    printf("%c", c);
+                    write(STDOUT_FILENO,&c,1);
             }
         }
     }
@@ -196,7 +197,7 @@ void readfile(char* filename){
             exit(1);
         }
         if (args.number)
-            printf("\n     1  ");
+            write(STDOUT_FILENO,"\n     1  ",9);
         while (!eof(handle)) {
             if (read(handle, &ch, 1) == -1) {
                 strcat(src, "mycat: ");
