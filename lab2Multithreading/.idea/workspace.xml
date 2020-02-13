@@ -11,8 +11,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe2633ec-74ee-46c8-8997-d939369867ef" name="Default Changelist" comment="">
+    <list default="true" id="fe2633ec-74ee-46c8-8997-d939369867ef" name="Default Changelist" comment="поддерживаются все ключи одновременно(только file, stdin не готов), подравнять код и сделать stdin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/main.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/mycat.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/mycat.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
@@ -29,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
+  <component name="OCFindUsagesOptions" text="false" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectId" id="1UI6wPChwc57Z3txcWOLIZPuF06" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
@@ -82,7 +84,8 @@
       <workItem from="1580919743169" duration="71000" />
       <workItem from="1580919869393" duration="634000" />
       <workItem from="1581080133151" duration="8714000" />
-      <workItem from="1581526397408" duration="15153000" />
+      <workItem from="1581526397408" duration="16667000" />
+      <workItem from="1581589736054" duration="6482000" />
     </task>
     <task id="LOCAL-00001" summary="сделан getopt, все еще один ключ за вызов">
       <created>1581335190917</created>
@@ -98,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581337392689</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="поддерживаются все ключи одновременно(только file, stdin не готов), подравнять код и сделать stdin">
+      <created>1581543391881</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1581543391881</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,6 +130,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="сделан getopt, все еще один ключ за вызов" />
     <MESSAGE value="заменил printf на write(кроме нумерации строк)" />
-    <option name="LAST_COMMIT_MESSAGE" value="заменил printf на write(кроме нумерации строк)" />
+    <MESSAGE value="поддерживаются все ключи одновременно(только file, stdin не готов), подравнять код и сделать stdin" />
+    <option name="LAST_COMMIT_MESSAGE" value="поддерживаются все ключи одновременно(только file, stdin не готов), подравнять код и сделать stdin" />
   </component>
 </project>
