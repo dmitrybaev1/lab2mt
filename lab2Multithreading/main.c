@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
+#define BUF_SIZE 4096
 //АРГУМЕНТЫ
 typedef struct globalArgs_t{
     int number;// -n
@@ -34,11 +35,11 @@ int squeezeflag1=0;
 int squeezeflag2=0;
 int numberflag=1;
 int firstrowfileflag=1;
-int isstdinfirstinqueue=1;
+//int isstdinfirstinqueue=1;
 //
-int i=0;
+//int i=0;
 void readfromfile(char* filename);
-void printfromfile(unsigned char c);
+void print(char* s, int bytes);
 //
 int main(int argc, char *argv[]) {
     catname=argv[0];
@@ -84,128 +85,44 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-int printnonprinting(unsigned char c){
-    if(c>=0&&c<=37&&c!=9&&c!=10&&c!=12) {
-        c = c+64;
-        write(STDOUT_FILENO,"^",1);
-        write(STDOUT_FILENO,&c,1);
-        return 1;
-    }
-    else if(c==177) {
-        write(STDOUT_FILENO, "^?", 2);
-        return 1;
-    }
-    return 0;
+void printrow(char* row,int count){
+    write(STDOUT_FILENO,row,count);
 }
-int printwithtabs(unsigned char c){
-    if(c==9) {
-        write(STDOUT_FILENO, "^I", 2);
-        return 1;
-    }
-    return 0;
-}
-int printwithends(unsigned char c){
-    if(c==10) {
-        if(!squeezeflag1) {
-            write(STDOUT_FILENO, "$", 1);
-            write(STDOUT_FILENO, &c, 1);
+char* getrow(int* i,int* count,char* s,int bytes){
+    int k=1;
+    int j;
+    char* row = (char *) malloc(1);
+    for (j=*i; j < bytes; j++) {
+        if (j == *i) {
+            row[0] = s[j];
+            k++;
+            if (s[j] == 10) {
+                j++;
+                break;
+            }
+        } else {
+            row = (char *) realloc(row, k);
+            row[k - 1] = s[j];
+            k++;
+            if (s[j] == 10) {
+                j++;
+                break;
+            }
         }
-        squeezeflag1=0;
-        return 1;
     }
-    squeezeflag1=0;
-    return 0;
+    *i=j;
+    *count=k-1;
+    return row;
 }
-int printwithnumberfromfile(unsigned char c){
-    if(firstrowfileflag){
-        i++;
-        printf("%6d  ", i);
-        firstrowfileflag=0;
-    }
-    if (c == 10) {
-        if(!squeezeflag2) {
-            if (!keyflags.endsflag)
-                write(STDOUT_FILENO, &c, 1);
-            i++;
-            printf("%6d  ", i);
-        }
-        squeezeflag2=0;
-        return 1;
-    }
-    return 0;
-}
-int printwithnumberfromstdin(unsigned char c){
-    if(numberflag){
-        numberflag=0;
-        i++;
-        printf("%6d  ", i);
-        write(STDOUT_FILENO,&c,1);
-        return 1;
-    }
-    if(c==10){
-        numberflag=1;
-    }
-    return 0;
-}
-int printsqueezeblank(unsigned char c){
-    if(squeezecount > 1) {
-        if (c != 10){
-            write(STDOUT_FILENO,&c,1);
-            squeezecount=0;
-        }
-        else {
-            squeezecount++;
-            squeezeflag1=1;
-            squeezeflag2=1;
-        }
-        return 1;
-    }
-    else{
-        if(c==10)
-            squeezecount++;
-        else
-            squeezecount=0;
-        //write(STDOUT_FILENO,&c,1);
-        return 0;
-    }
-}
-void resetkeyflags(){
-    keyflags.nonprintingflag=0;
-    keyflags.tabsflag=0;
-    keyflags.endsflag=0;
-    keyflags.numberflag=0;
-    keyflags.squeezeblankflag=0;
-}
-void printfromfile(unsigned char c){//порядок if-ов важен!
-    if(args.squeezeblank)
-        keyflags.squeezeblankflag=printsqueezeblank(c);
-    if(args.shownonprinting)
-        keyflags.nonprintingflag=printnonprinting(c);
-    if(args.showtabs)
-        keyflags.tabsflag=printwithtabs(c);
-    if(args.showends)
-        keyflags.endsflag=printwithends(c);
-    if(args.number)
-        keyflags.numberflag= printwithnumberfromfile(c);
-    if(!keyflags.nonprintingflag && !keyflags.tabsflag && !keyflags.endsflag && !keyflags.numberflag && !keyflags.squeezeblankflag)
-        write(STDOUT_FILENO,&c,1);
-    resetkeyflags();
-}
-void printfromstdin(unsigned char c){
-    if (args.squeezeblank)
-        keyflags.squeezeblankflag=printsqueezeblank(c);
-    if (args.shownonprinting)
-        keyflags.nonprintingflag=printnonprinting(c);
-    if (args.showtabs)
-        keyflags.tabsflag=printwithtabs(c);
-    if (args.showends)
-        keyflags.endsflag=printwithends(c);
-    if (args.number) {
-        keyflags.numberflag=printwithnumberfromstdin(c);
-    }
-    if(!keyflags.nonprintingflag && !keyflags.tabsflag && !keyflags.endsflag && !keyflags.numberflag && !keyflags.squeezeblankflag)
-        write(STDOUT_FILENO,&c,1);
-    resetkeyflags();
+void print(char* s, int bytes){//порядок if-ов важен!
+   int i=0;
+   int count;
+   while (i<bytes) {
+       //printf("i is %d, bytes is %d",i,bytes);
+       char* row = getrow(&i,&count,s,bytes);
+       printrow(row, count);
+       free(row);
+   }
 }
 void file_err(char* filename){
     strcat(src, catname);
@@ -216,38 +133,24 @@ void file_err(char* filename){
 }
 void readfromfile(char* filename){
     int handle;
-    unsigned char ch;
-    if(strcmp(filename,"-")==0){//stdin
-        if(!isstdinfirstinqueue){
-            i--;
-        }
-        isstdinfirstinqueue=1;
-        firstrowfileflag=1;
-        unsigned char c;
-        int n;
-        while ((n = read(STDIN_FILENO, &c, 1)) >= 0) {
-            if (n == 0) {
-                break;
-            } else {
-                printfromstdin(c);
-            }
-        }
-    }
-    else {//file
-        isstdinfirstinqueue=0;
+    char buf[BUF_SIZE];
+    int bytes;
+    if(strcmp(filename,"-")!=0) {//file
         if ((handle = open(filename, O_RDONLY)) == -1) {
             file_err(filename);
         }
-        /*if (args.number&&firstrowfileflag) {
-            write(STDOUT_FILENO, "     1  ", 9);
-            firstrowfileflag=0;
-        }*/
-        while (!eof(handle)) {
-            if (read(handle, &ch, 1) == -1) {
-                file_err(filename);
-            }
-            printfromfile(ch);
+        while ((bytes = read(handle, buf, BUF_SIZE)) > 0) {
+            print(buf, bytes);
         }
+        if (bytes == -1)
+            file_err(filename);
         close(handle);
+    }
+    else{//stdin
+        while ((bytes = read(STDIN_FILENO, buf, BUF_SIZE)) > 0) {
+            print(buf, bytes);
+        }
+        if (bytes == -1)
+            file_err(filename);
     }
 }
