@@ -5,7 +5,6 @@
 #include <errno.h>
 #include <unistd.h>
 #define BUF_SIZE 4096
-//АРГУМЕНТЫ
 typedef struct globalArgs_t{
     int number;// -n
     int shownonprinting;// -v
@@ -15,32 +14,16 @@ typedef struct globalArgs_t{
     char **files;
     int numfiles;
 }globalargs;
-//ФЛАГИ ПЕЧАТИ
-typedef struct flags_t{
-    int numberflag;
-    int nonprintingflag;
-    int endsflag;
-    int tabsflag;
-    int squeezeblankflag;
-}printflags;
-//ОСТАЛЬНЫЕ ПЕРЕМЕННЫЕ
 globalargs args={0, 0, 0, 0, 0, NULL, 0};
-printflags keyflags={0, 0, 0, 0, 0};
 const char *optstring="nvETs";
+int number=0;
+int neednumber=1;
+int emptyrow=0;
 char src[256];
 char *catname;
-int squeezecount=0;
-//ФЛАГИ
-int squeezeflag1=0;
-int squeezeflag2=0;
-int numberflag=1;
-int firstrowfileflag=1;
-//int isstdinfirstinqueue=1;
-//
-//int i=0;
 void readfromfile(char* filename);
 void print(char* s, int bytes);
-//
+
 int main(int argc, char *argv[]) {
     catname=argv[0];
     int opt=0;
@@ -73,9 +56,6 @@ int main(int argc, char *argv[]) {
         args.numfiles = argc - optind;
         if(args.numfiles>0)
             for (int i = 0; i < args.numfiles; i++) {
-                squeezecount=0;
-                squeezeflag1=0;
-                numberflag=1;
                 readfromfile(args.files[i]);
             }
         else
@@ -86,7 +66,50 @@ int main(int argc, char *argv[]) {
 }
 
 void printrow(char* row,int count){
-    write(STDOUT_FILENO,row,count);
+    int tabsflag=0;
+    int endsflag=0;
+    int nonprintingflag=0;
+    if(args.number){
+        if(neednumber) {
+            number++;
+            printf("%6d  ", number);
+        }
+        else
+            neednumber=1;
+    }
+    for(int i=0;i<count;i++){
+        if(args.showtabs)
+            if(row[i]==9) {
+                write(STDOUT_FILENO, "^I", 2);
+                tabsflag=1;
+            }
+        if(args.shownonprinting){
+            unsigned char c = row[i];
+            if(c>=0&&c<=37&&c!=9&&c!=10&&c!=12) {
+                c = c + 64;
+                write(STDOUT_FILENO, "^", 1);
+                write(STDOUT_FILENO, &c, 1);
+                nonprintingflag=1;
+            }
+            else if(c==177) {
+                write(STDOUT_FILENO, "^?", 2);
+                nonprintingflag=1;
+            }
+        }
+        if(args.showends){
+            if(row[i]==10){
+                write(STDOUT_FILENO, "$\n", 2);
+                endsflag=1;
+            }
+        }
+        if(!endsflag&&!tabsflag&&!nonprintingflag)
+            write(STDOUT_FILENO,&row[i],1);
+        tabsflag=0;
+        endsflag=0;
+        nonprintingflag=0;
+    }
+    if(row[count-1]!=10)//если последний символ строки не перенос
+        neednumber=0;
 }
 char* getrow(int* i,int* count,char* s,int bytes){
     int k=1;
@@ -96,8 +119,9 @@ char* getrow(int* i,int* count,char* s,int bytes){
         if (j == *i) {
             row[0] = s[j];
             k++;
-            if (s[j] == 10) {
+            if (s[j] == 10) {//empty row
                 j++;
+                emptyrow++;
                 break;
             }
         } else {
@@ -106,21 +130,29 @@ char* getrow(int* i,int* count,char* s,int bytes){
             k++;
             if (s[j] == 10) {
                 j++;
+                emptyrow=0;
                 break;
             }
         }
+    }
+    if(j==bytes){
+        emptyrow=0;
     }
     *i=j;
     *count=k-1;
     return row;
 }
-void print(char* s, int bytes){//порядок if-ов важен!
+void print(char* s, int bytes){
    int i=0;
    int count;
    while (i<bytes) {
-       //printf("i is %d, bytes is %d",i,bytes);
        char* row = getrow(&i,&count,s,bytes);
-       printrow(row, count);
+       if(args.squeezeblank){
+           if(emptyrow<=1)
+               printrow(row, count);
+       }
+       else
+           printrow(row, count);
        free(row);
    }
 }

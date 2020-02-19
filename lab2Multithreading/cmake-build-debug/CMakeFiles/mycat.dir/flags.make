@@ -3,6 +3,7 @@
 
 # compile C with D:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/gcc.exe
 C_FLAGS = -g   -std=gnu99
+# C_FLAGS = -Wall -Wextra -std=gnu99 -pedantic -Werror -g -fsanitize=address
 
 C_DEFINES = 
 
