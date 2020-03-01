@@ -11,10 +11,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe2633ec-74ee-46c8-8997-d939369867ef" name="Default Changelist" comment="все ключи, работает как cat(кроме ctrl+z). Надо сделать поддержку файла большего размера чем буфер.">
+    <list default="true" id="fe2633ec-74ee-46c8-8997-d939369867ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/mycat.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/mycat.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/main.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mycat.dir/objects.a" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +41,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -89,7 +90,10 @@
       <workItem from="1581963772157" duration="36668000" />
       <workItem from="1582625731693" duration="223000" />
       <workItem from="1582627653419" duration="618000" />
-      <workItem from="1582648586708" duration="3979000" />
+      <workItem from="1582648586708" duration="4064000" />
+      <workItem from="1582711903835" duration="363000" />
+      <workItem from="1582732681007" duration="1024000" />
+      <workItem from="1582733893449" duration="59000" />
     </task>
     <task id="LOCAL-00001" summary="сделан getopt, все еще один ключ за вызов">
       <created>1581335190917</created>
@@ -133,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582109185647</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="final">
+      <created>1582666858052</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1582666858052</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +170,7 @@
     <MESSAGE value="прикрутил stdin, правил найденные баги" />
     <MESSAGE value="новая версия, буферизованность, разбиение на строки. Нет ключей, обработки write." />
     <MESSAGE value="все ключи, работает как cat(кроме ctrl+z). Надо сделать поддержку файла большего размера чем буфер." />
-    <option name="LAST_COMMIT_MESSAGE" value="все ключи, работает как cat(кроме ctrl+z). Надо сделать поддержку файла большего размера чем буфер." />
+    <MESSAGE value="final" />
+    <option name="LAST_COMMIT_MESSAGE" value="final" />
   </component>
 </project>
